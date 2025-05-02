@@ -3,7 +3,10 @@ name = "practice"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "Until",email = "kostyuchenko.work@gmail.com"}
+    {name = "TominVadim", email = "tomin.1991@inxbox.ru"},
+    {name = "xxinxl", email = "natalia.lyamina1234@gmail.com"},
+    {name = "mariiia8", email = "mariasidorova567@gmail.com"},
+    {name = "oleg3854", email = "zmey3854@gmail.com"},
 ]
 readme = "README.md"
 requires-python = ">=3.13"
