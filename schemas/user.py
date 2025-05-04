@@ -7,7 +7,7 @@ from enums import RoleEnum
 class ProfilePD(BaseModel):
     phone: str | None
     name: str | None
-    suname: str | None
+    surname: str | None
     about: str | None
     date_birthday: datetime | None
 
@@ -27,9 +27,8 @@ class UserPD(BaseModel):
     @field_validator('profile', mode='before')
     @classmethod
     def profile_to_dict(cls, value):
-        
+
         if isinstance(value, dict):
             return dict(ProfilePD(**value))
-        
+
         return dict(ProfilePD.model_validate(value))
-    

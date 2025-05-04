@@ -3,7 +3,7 @@ import datetime
 from pytz import timezone # Для работы нужно установить библиотеку pytz
 
 class MoscowTimeFormatter(logging.Formatter): # Наследуемся от стандартного форматера логгера
-    
+
     def formatTime(self, record, datefmt=None): # Далее мы ПЕРЕОПРЕДЕЛЯЕМ метод formatTime, который будет форматировать время в соответствии с нашим МСК временем. 
         record_time = datetime.datetime.fromtimestamp(record.created, tz=timezone('Europe/Moscow')) # Переводим время из timestamp в datetime объект с учетом МСК временной зоны.
         if datefmt: # Нужни ли как то форматировать время по особенному?

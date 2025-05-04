@@ -48,7 +48,7 @@ class Base(DeclarativeBase):
     @declared_attr.directive
     def __tablename__(cls) -> str:
         return cls.__name__.lower() + "s"
-    
+
     @classmethod
     @connection
     def get(cls, session: Session = None, **creterias) -> None|Self:
@@ -62,7 +62,7 @@ class Base(DeclarativeBase):
         query = select(cls).filter_by(**creterias)
         rows = session.execute(query)
         return rows.scalar_one_or_none()
-     
+
     @classmethod
     @connection
     def get_all_by_creterias(cls, session: Session = None, **creterias) -> list[Self]:
@@ -77,7 +77,7 @@ class Base(DeclarativeBase):
         query = select(cls).filter_by(**creterias)
         rows = session.execute(query)
         return rows.scalars().all()
-    
+
     @classmethod
     @connection
     def get_all(cls, session: Session = None) -> list[Self]:
@@ -92,7 +92,7 @@ class Base(DeclarativeBase):
         query = select(cls)
         rows = session.execute(query)
         return rows.scalars().all()
-    
+
     @classmethod
     @connection
     def create(
@@ -120,7 +120,7 @@ class Base(DeclarativeBase):
         datas: list[dict],
         session: Session = None,
     ) -> list[Self]:
-        """Создает несколько объектов за раз 
+        """Создает несколько объектов за раз
 
         Args:
             datas (list[dict]): Список данных для каждой строки БД
@@ -158,26 +158,25 @@ class Base(DeclarativeBase):
         rows = session.execute(query)
         concrete_row = rows.scalar_one_or_none()
 
-        
         if not concrete_row:
             raise ValueError(f'Данные с таким id в таблице {cls.__tablename__} не найдены')
-        
+
         for key, value in data.items():
             if key not in concrete_row.__dict__:
                 raise ValueError(f'Колонки "{key}" нету в таблице {cls.__tablename__}')
             if getattr(concrete_row, key) != value:
                 setattr(concrete_row, key, value)
-        
+
         session.commit()
         return concrete_row
-    
+
     @classmethod
     @connection
     def delete(
         cls,
         id: int,
         session: Session = None,
-    ) -> bool: 
+    ) -> bool:
         """Удаление строки данных
 
         Args:
@@ -185,7 +184,7 @@ class Base(DeclarativeBase):
             session (Session, optional): Сессия запроса(подставляется автоматически). Defaults to None.
 
         Returns:
-            bool 
+            bool
         """
         query = select(cls).where(cls.id == id)
         rows = session.execute(query)
@@ -195,8 +194,7 @@ class Base(DeclarativeBase):
             session.commit()
             return True
         return False
-    
+
     def to_dict(self) -> dict:
         columns = class_mapper(self.__class__).columns
         return {column.key: getattr(self, column.key) for column in columns}
-    

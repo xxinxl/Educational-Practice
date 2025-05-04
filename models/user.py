@@ -50,9 +50,9 @@ class User(Base):
         new_user = cls(username=username, password=password, email=email, role=role)
         session.add(new_user)
         session.flush()
-        
+
         new_profile = Profile(user_id=new_user.id, **kwargs.get('profile', {}))
         session.add(new_profile)
         session.commit()
-        
+
         return new_user
